@@ -1,0 +1,11 @@
+prefix=@PREFIX@
+exec_prefix=${prefix}
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+Name: quickplot
+Description: quickplot, a 2D potter
+Version: @VERSION@
+#Requires: libpanels >= 0.0.1
+Libs: -L${libdir} -lquickplot
+Cflags: -I${includedir}

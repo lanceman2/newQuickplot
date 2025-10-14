@@ -1,0 +1,21 @@
+#ifndef __QP_H__
+#define __QP_H__
+
+#include <stdio.h>
+
+
+#ifndef QP_EXPORT
+#  define QP_EXPORT extern
+#endif
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif // #ifndef __QP_H__
