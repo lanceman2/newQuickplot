@@ -2,9 +2,7 @@
 
 root := ..
 
-include $(root)/pkg-cairo.make
 include $(root)/pkg-panels.make
-include $(root)/pkg-cairo.make
 
 
 INSTALL_DIR = $(PREFIX)/bin
@@ -12,22 +10,19 @@ INSTALL_DIR = $(PREFIX)/bin
 BUILD_NO_INSTALL :=
 
 
-common_sources :=\
- getOpt.c
-
 quickplot_SOURCES :=\
  quickplot.c\
+ getOpt.c\
+ $(root)/lib/debug.c\
  $(common_sources)
 
 quickplot_CPPFLAGS :=\
- $(PANELS_CFLAGS)\
- $(CAIRO_CFLAGS)
+ -DUSER_PREFIX=\"QP_\"\
+ $(PANELS_CFLAGS)
 
 quickplot_LDFLAGS :=\
  $(PANELS_LDFLAGS)\
- $(CAIRO_LDFLAGS)\
- -L../lib -lquickplot\
- -Wl,-rpath=\$$ORIGIN/../lib -lm
+ -lm
 
 
 include ../quickbuild.make

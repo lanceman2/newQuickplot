@@ -2,7 +2,6 @@ root := ..
 
 include $(root)/config.make
 include $(root)/pkg-panels.make
-include $(root)/pkg-cairo.make
 
 INSTALL_DIR = $(PREFIX)/lib
 
