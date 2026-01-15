@@ -33,6 +33,7 @@ endef
 
 
 $(eval $(call MkProgram, quickplot))
+quickplot_SOURCES += findGrapher.c
 $(eval $(call MkProgram, StaticPlot_0))
 $(eval $(call MkProgram, Mic_ScopePlot_0))
 $(eval $(call MkProgram, ScopePlot_0))

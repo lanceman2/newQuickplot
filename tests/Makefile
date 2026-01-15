@@ -9,7 +9,7 @@ QP_LIB := -L../lib -lquickplot -Wl,-rpath=\$$ORIGIN/../lib
 010_debug_LDFLAGS := $(QP_LIB)
 
 
-CLEANFILES := $(wildcard tmp_*)
+CLEANFILES := $(wildcard tmp_*) staticPlot_0_dir/qp_graph.so
 
 test: build
 	./run_tests

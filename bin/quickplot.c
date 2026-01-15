@@ -10,6 +10,8 @@
 
 #include "../lib/debug.h"
 
+#include "findGrapher.h"
+
 
 static
 void catcher(int sig) {
@@ -127,7 +129,8 @@ static void Graph(struct PnWidget *parent) {
     ScopePlot(g);
 }
 
-static void GraphHContainer(struct PnWidget *parent) {
+// Return true on error.
+static bool GraphHContainer(struct PnWidget *parent) {
 
     struct PnWidget *w = pnWidget_create(parent, 6, 6,
             PnLayout_LR/*layout*/, 0/*align*/,
@@ -136,11 +139,19 @@ static void GraphHContainer(struct PnWidget *parent) {
     //                  Color Bytes:  A R G B
     pnWidget_setBackgroundColor(w, 0xFFE060F0, 0);
 
+    int ret = findGrapher(w);
+    if(ret < 0)
+        return true;
+    else if(ret)
+        return false;
+
     Graph(w);
     Graph(w);
+    return false;
 }
 
-static void WindowVContainer(struct PnWidget *win) {
+// Return true on error.
+static bool WindowVContainer(struct PnWidget *win) {
 
     // Reuse win:
     struct PnWidget *w = pnWidget_create(win, 2, 2,
@@ -152,22 +163,23 @@ static void WindowVContainer(struct PnWidget *win) {
 
     // TODO: Add other widgets like menus, button bar, and graph tabs.
 
-    GraphHContainer(w);
+    return GraphHContainer(w);
 
     // TODO: Add status bar last.
 }
 
-static struct PnWidget *Window(void) {
+struct PnWidget *win;
 
-    struct PnWidget *win = pnWindow_create(0, 8, 8,
+// Return true on error.
+static bool Window(void) {
+
+    win = pnWindow_create(0, 8, 8,
             0/*x*/, 0/*y*/, PnLayout_TB/*layout*/, 0,
             PnExpand_HV);
     ASSERT(win);
     pnWindow_setPreferredSize(win, 1100, 900);
 
-    WindowVContainer(win);
-
-    return win;
+    return WindowVContainer(win);
 }
 
 
@@ -175,11 +187,14 @@ int main(void) {
 
     ASSERT(SIG_ERR != signal(SIGSEGV, catcher));
 
-    struct PnWidget *win = Window();
+    if(Window())
+        return 3; // error
 
     pnWindow_show(win);
 
     pnDisplay_run();
+
+    cleanupGrapher();
 
     return 0;
 }
