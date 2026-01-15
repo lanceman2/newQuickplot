@@ -5,6 +5,4 @@ shopt -s nullglob
 
 cd ./staticPlotDSO_0_dir
 
-export PATH="../../bin:${PATH}"
-
-quickplot
+../../bin/quickplot
