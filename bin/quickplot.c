@@ -139,11 +139,6 @@ static bool GraphHContainer(struct PnWidget *parent) {
     //                  Color Bytes:  A R G B
     pnWidget_setBackgroundColor(w, 0xFFE060F0, 0);
 
-    int ret = findGrapher(w);
-    if(ret < 0)
-        return true;
-    else if(ret)
-        return false;
 
     Graph(w);
     Graph(w);
@@ -152,6 +147,12 @@ static bool GraphHContainer(struct PnWidget *parent) {
 
 // Return true on error.
 static bool WindowVContainer(struct PnWidget *win) {
+
+    int ret = findGrapher(win);
+    if(ret < 0)
+        return true;
+    else if(ret)
+        return false;
 
     // Reuse win:
     struct PnWidget *w = pnWidget_create(win, 2, 2,
@@ -173,9 +174,10 @@ struct PnWidget *win;
 // Return true on error.
 static bool Window(void) {
 
-    win = pnWindow_create(0, 8, 8,
+    win = pnWindow_create(0, 3, 3,
             0/*x*/, 0/*y*/, PnLayout_TB/*layout*/, 0,
             PnExpand_HV);
+    pnWidget_setBackgroundColor(win, 0xFF000000, 0);
     ASSERT(win);
     pnWindow_setPreferredSize(win, 1100, 900);
 
